@@ -2,13 +2,25 @@
 
 ## 목차
 
+### Spark 
+
 1. JAVA 설치
 2. Spark 다운로드 및 설치
 3. Spark란 폴더 이름으로 library에 저장
 4. 실행 Path 저장
 5. spark 실행
 
+### spark cluster
 
+1. vitualbox 네트워크 어뎁터 설정(브릿지 사용)
+2. master가 관리 할 worker등록
+3. cluster ssh연결
+4. Spark Cluster의 구축
+5. Worker의 인스턴스 환경 설정
+6. Start Worker
+7. log4j:WARN Please initialize the log4j system properly 오류
+8. cannot run program "python": error=2, No such file or directory 오류
+9. ModuleNotFoundError - No Module named _ctypes 오류
 
 ## Spark Install
 
@@ -240,7 +252,56 @@ print("Lines with a: %i, lines with b: %i" % (numAs, numBs))
 
 ```
 $ cd /usr/lib/spark/
-./spark-submit --master local[4] test.py
+./spark-submit test.py
 ```
 
-https://www.slideshare.net/KangDognhyun/2apache-spark
+### log4j:WARN Please initialize the log4j system properly 오류
+
+log4j는 자바에서 사용하는 로그를 기록하는 라이브러리입니다.
+
+이 라이브러리를 이용해서 많은 프로그램들이 디버깅용 로그를 남긴다든지, 시스템에 중요한 정보를 남긴다는지를 합니다.
+
+log4j는 현재 동작하는 자바환경에서
+
+**log4j.properties** 혹은 **log4j.xml** 파일을 찾아서 해당하는 파일의 정보값을 읽어서 
+
+이렇게 설정된 대로 로그를 남기게 됩니다.
+
+이 파일들이 CLASSPATH에서 찾을 수 없으니 이러한 워닝이 발생했다.
+
+[해결법]
+
+아래의 코드를 /usr/lib/spark/conf의 log4j.properties.template을 복사해서 log4j.properties을 하나 만들고 아래의 코드를 붙여 넣자.
+
+```bash
+# Set root logger level to DEBUG and its only appender to A1.
+log4j.rootLogger=DEBUG, A1
+# A1 is set to be a ConsoleAppender.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+# A1 uses PatternLayout.
+
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+```
+
+### cannot run program "python": error=2, No such file or directory 오류
+
+환경변수의 값이 잘못 설정 되어 있다.
+
+[해결법]
+
+```
+export PYSPARK_PYTHON=python3
+or 
+vim ~/.bashrc에서
+export PYSPARK_PYTHON=python3 추가
+```
+
+### ModuleNotFoundError - No Module named _ctypes 오류
+
+설치해주자
+
+```
+# 우분투
+sudo apt install libffi-dev 
+```
+
