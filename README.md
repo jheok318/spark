@@ -33,7 +33,23 @@
 $ sudo apt-get install default-jdk
 ```
 
+##### JAVA 환경변수 지정
 
+환경변수를 지정하기 위해, Path를 알아야 합니다.
+JAVA관리를 위한 명령어를 통하면, 각 JAVA들의 path를 확인할 수 있습니다.
+예를 들어, /usr/lib/jvm/java-8-openjdk-amd64 라는 Path를 확인하여, environment 에 아래와 같이 추가해줍니다.
+
+$ sudo nano /etc/environment
+
+> JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+
+저장을 하고 나서, 아래 명령어로 적용을 해주면 됩니다.
+
+$ source /etc/environment
+
+PATH가 제대로 지정되었는지 확인하기 위해서는 아래 명령을 사용합니다.
+
+$ echo $JAVA_HOME
 
 ### spark 다운로드 및  설치
 
@@ -303,5 +319,25 @@ export PYSPARK_PYTHON=python3 추가
 ```
 # 우분투
 sudo apt install libffi-dev 
+```
+
+## spark session 객체 생성
+
+### sparkSession은 모든 Spark작업의 시작점이다.
+
+```python
+#파이썬에서 SparkSession 생성하기
+from pyspark.sql import SparkSession
+import time
+
+spark = SparkSession.builder.master("local").appName("Word Count").config("spark.some.config.option", "some-value").getOrCreate()
+
+time.sleep(60)
+```
+
+### worker를 연결후 예제 실행
+
+```
+./spark-submit testSession.py
 ```
 
