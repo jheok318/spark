@@ -341,3 +341,45 @@ time.sleep(60)
 ./spark-submit testSession.py
 ```
 
+## Spark에서 사용하는 Data Structure
+
+- **RDD**
+- **Dataset**
+- **DataFrame**
+
+### RDD
+
+- Resilient Distributed Dataset = 분산된 데이터에 대한 자료 구조
+- MapReduce방식
+  - 흩어져 있는 데이터를 수직화하여, 그 데이터를 각각의 종류 별로 모으고(MAP)
+  - **Map** : 흩어져 있는 데이터를 Key, Value의 형태로 연관성 있는 데이터 분유로 묶는 작업
+  - Filtering과 Sorting을 거쳐 데이터를 뽑아 내는(Reduce) 방식
+  - **Reduce** : Map화한 작업 중 중복 데이터를 제거하고 원하는 데이터를 추출하는 작업
+- <img src="img/02.png" alt="02" style="zoom:67%;" />
+- 병렬적으로 처리한다.
+- 연산이 빠르다
+- 불변하다
+- Transformation과 Action으로 함수 종류가 나눠지며, Action 함수가 실행됐을 때 실제로 연산한다.
+- <img src="img/03.png" alt="03" style="zoom:67%;" />
+
+### DataFrame
+
+- SparkSQL을 통해 사용할 수 있다.
+- 불변하다.
+- Named Column으로 구성되어있다.
+- RDB Table처럼 Schema를 가지고 있으며 RDB의 Table 연산이 가능
+- SQL등을 이용해 데이터를 join하고 추출가능하다.
+
+### Dataset
+
+- RDD와 DataFrame의 장점을 취한다.
+- RDD와 매우 유사한 특징을 갖는다.
+- 차이점이라면 Dataset은 type과 Schema가 정의되어 있다.
+
+### RDD vs DataFrame vs Dataset 언제 사용하는가
+
+- 데이터를 직접적으로 핸들해야하는 경우 -> RDD
+- 추상화된 API를 사용한 간결한 코드 작성 및 성능 향상을 꾀하고자 한다면 DataFrame 및 Dataset
+
+
+
