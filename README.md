@@ -1,11 +1,5 @@
 # SPARK Install & Cluster 구성 부터 df까지
 
-## 목차
-
-[TOC]
-
-
-
 ## Spark Install
 
 ### java 설치
@@ -130,7 +124,7 @@ Type :help for more information.
 scala> 
 ```
 
-
+<hr/>
 
 ## Cluster 구성
 
@@ -250,10 +244,12 @@ print("Lines with a: %i, lines with b: %i" % (numAs, numBs))
 
 ```
 
-```
+```bash
 $ cd /usr/lib/spark/
 ./spark-submit test.py
 ```
+
+<hr/>
 
 ## Error처리
 
@@ -307,7 +303,7 @@ export PYSPARK_PYTHON=python3 추가
 sudo apt install libffi-dev 
 ```
 
-
+<hr/>
 
 ## spark session 객체 생성
 
@@ -329,7 +325,7 @@ time.sleep(60)
 ./spark-submit testSession.py
 ```
 
-
+<hr/>
 
 ## Spark에서 사용하는 Data Structure
 
@@ -419,7 +415,9 @@ print(spark_data)
 - 데이터를 직접적으로 핸들해야하는 경우 -> RDD
 - 추상화된 API를 사용한 간결한 코드 작성 및 성능 향상을 꾀하고자 한다면 DataFrame 및 Dataset
 
-### csv파일 dataframe형태로 변환후 예제 실습
+<hr/>
+
+## csv파일 dataframe형태로 변환후 예제 실습
 
 ### CSV 파일 읽기(read)
 
